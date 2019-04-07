@@ -7,9 +7,7 @@
  */
 
 import React, { Component } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import AsyncStorage from "@react-native-community/async-storage";
-import RotatingLogo from "./RotatingLogo";
+import { StyleSheet, Text, View, Image } from "react-native";
 import { StackActions, NavigationActions } from 'react-navigation';
 
 export default class SplashScreen extends Component {
@@ -19,22 +17,10 @@ export default class SplashScreen extends Component {
 
   componentDidMount() {
     setTimeout(async () => {
-      try {
-        const cityKey = await AsyncStorage.getItem("cityKey");
-        if (cityKey !== null) {
-          // We have data!!
-          console.log(value);
-        } else {
-          console.log("No data, navigating to select city page");
-          // this.props.navigation.navigate("SelectCity");
-          this.props.navigation.dispatch(StackActions.reset({
-            index: 0,
-            actions: [NavigationActions.navigate({ routeName: 'SelectCity' })],
-          }));
-        }
-      } catch (error) {
-        // Error retrieving data
-      }
+      this.props.navigation.dispatch(StackActions.reset({
+        index: 0,
+        actions: [NavigationActions.navigate({ routeName: 'Weather' })],
+      }));
     }, 500);
   }
 
@@ -45,7 +31,8 @@ export default class SplashScreen extends Component {
       <View style={styles.container}>
         <Text style={styles.name}>React Weather App</Text>
         {/* <Text style={styles.instructions}>To get started, edit App.js</Text> */}
-        <RotatingLogo style={styles.logo} />
+        {/* <RotatingLogo style={styles.logo} /> */}
+        <Image source={require('../assets/icon_apixu.png')}></Image>
         <Text style={styles.slogan}>Growth through passion and discipline</Text>
       </View>
     );
@@ -71,6 +58,6 @@ const styles = StyleSheet.create({
   slogan: {
     textAlign: "center",
     color: "#333333",
-    marginTop: 300
+    marginTop: 350
   }
 });
